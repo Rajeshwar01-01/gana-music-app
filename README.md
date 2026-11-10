@@ -1,17 +1,25 @@
 # AfroVibe
 
-AfroVibe is a browser-based Ghanaian music library with an original Highlife-inspired demo loop.
+AfroVibe is a browser-based music player with a Gen Z neon theme, an original Highlife-inspired demo loop, local audio, YouTube embeds, and editable playlists.
 
 **Live app:** https://rajeshwar01-01.github.io/gana-music-app/
 
-## Use it
+## Music library
 
-Open `index.html`, select **Choose audio files**, and add audio stored on your device. Search and filter the library, play/pause tracks, seek, set volume, and keep favorites. The included Accra After Hours demo is generated in the browser with Web Audio; it is not a commercial recording.
+- Paste a YouTube video link or public playlist link to add it to your library.
+- Playback runs in YouTube's official embedded player. Videos that block embedding, are private, or are unavailable in your region may not play here. Open those on YouTube instead.
+- Add local audio files you own or have permission to use. Audio stays in this browser on this device.
+- Search and filter the library, like tracks, and use the player controls to play, pause, skip, seek, and adjust volume.
+- The included Accra After Hours demo is generated in the browser with Web Audio; it is not a commercial recording.
 
-## Storage and limits
+AfroVibe does not download YouTube audio or provide a commercial streaming catalog. YouTube playback is provided by the embedded player and follows YouTube's own availability and playback rules.
 
-This is a standalone demo with no login, streaming catalog, or server. Imported audio and favorites are stored locally in this browser using IndexedDB. They do not sync to other browsers or devices. The app cannot provide licensed commercial tracks; import music you own or have permission to use.
+## Playlists
 
-## Publish with GitHub Pages
+Create, rename, and delete playlists. Use the **+** button next to a library track to add it to the selected playlist. Export a playlist as JSON and share that file; another person can import it in AfroVibe.
 
-Set **Settings → Pages → Deploy from a branch → main → /(root)**. The app is a static HTML file and requires no build step.
+Shared playlist files contain YouTube video or playlist links, not audio. Local audio and the original demo are not transferred. Playlists and saved YouTube links are kept in browser storage on the current device; there is no account, server, or automatic cross-device sync.
+
+## Run or publish
+
+Open `index.html` in a modern browser. To publish with GitHub Pages, choose **Settings → Pages → Deploy from a branch → main → /(root)**. The site is static HTML and needs no build step.
