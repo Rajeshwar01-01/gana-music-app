@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#0d1110"><meta name="description" content="Ghana Music: play an original Highlife-inspired demo or your own locally stored music."><title>Ghana Music — Sounds from home</title>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#110b19"><meta name="description" content="AfroVibe is your local Ghanaian music player for Highlife, Hiplife and Afrobeats."><title>AfroVibe — Ghana sounds, your way</title>
 <style>
 :root{color-scheme:dark;--bg:#0d1110;--panel:#151b18;--panel2:#1b231e;--line:#28342d;--text:#f5f4ee;--muted:#a4afa5;--green:#76d6a1;--gold:#e8bd66;--red:#fa857b;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
 *{box-sizing:border-box}body{margin:0;min-height:100vh;color:var(--text);background:radial-gradient(ellipse at 85% 0,#32301d 0,transparent 35%),radial-gradient(ellipse at 10% 45%,#183228 0,transparent 38%),var(--bg)}button,input{font:inherit;color:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible{outline:2px solid #d6bb70;outline-offset:3px}
@@ -11,10 +11,10 @@
 @media(max-width:880px){.grid{grid-template-columns:1fr}.column.side{grid-template-columns:1fr 1fr}.player-inner{grid-template-columns:1fr auto 1fr}}@media(max-width:620px){.shell{padding:17px 12px 126px}.top-tag{display:none}.hero{align-items:start;flex-direction:column;min-height:0;padding:20px}.hero-actions{width:100%}.hero-actions .btn{flex:1}.column.side{grid-template-columns:1fr}.track{grid-template-columns:40px minmax(0,1fr) auto auto}.track .remove{display:none}.player-inner{grid-template-columns:minmax(0,1fr) auto;gap:8px;padding:10px 12px}.volume{display:none}.now .cover{width:36px;height:36px}.player-controls{gap:3px}.player-controls button{width:30px}.player-controls .play{width:36px;height:36px}.card-pad{padding:15px}.card-head{align-items:start;flex-direction:column}.search{width:100%}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
 </style>
-</head>
+<style id="fresh-genz-theme">:root{--bg:#110b19;--panel:#1d1428;--panel2:#26182f;--line:#49304d;--text:#fff8f2;--muted:#c4b1c9;--green:#ff70b8;--gold:#ffe16a;--red:#74d7ff}body{background:radial-gradient(ellipse at 85% 0,#55254e 0,transparent 37%),radial-gradient(ellipse at 10% 48%,#263d57 0,transparent 38%),var(--bg)}.brand-mark,.cover{background:linear-gradient(135deg,#ff70b8,#ffe16a)!important;color:#251328!important}.hero{border-color:#67415d;background:linear-gradient(110deg,#43203e,#202241 68%,#262044)}.btn.primary{background:linear-gradient(110deg,#ff70b8,#ffe16a)!important;color:#251328!important;box-shadow:0 9px 28px #ff70b833}.btn{border-color:#57425e}.player{background:rgba(17,11,25,.96)!important;border-color:#49304d!important}.eyebrow{color:#ffe16a}.genre.active,.genre[aria-pressed="true"]{border-color:#ff70b8;color:#ffe16a}</style></head>
 <body>
 <div class="shell">
-<header class="top"><div class="brand"><div class="brand-mark" aria-hidden="true">GH</div><div><h1>GHANA MUSIC</h1><p>Sounds from home. Your library, your way.</p></div></div><span class="top-tag">Highlife · Hiplife · Afrobeats</span></header>
+<header class="top"><div class="brand"><div class="brand-mark" aria-hidden="true">AV</div><div><h1>AFROVIBE</h1><p>Ghana sounds, your way.</p></div></div><span class="top-tag">Highlife · Hiplife · Afrobeats</span></header>
 <section class="hero"><div class="hero-copy"><div class="eyebrow">A little rhythm for your day</div><h2>Feel the Ghana groove.</h2><p>Play an original Highlife-inspired loop or bring your own audio files. Your music stays on this device.</p></div><div class="hero-actions"><button class="btn primary" id="playDemo" type="button">▶ Play the original demo</button><button class="btn" id="uploadTop" type="button">＋ Add my music</button></div></section>
 <main class="grid">
 <div class="column">
