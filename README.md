@@ -1,6 +1,6 @@
-# Ghana Music
+# AfroVibe
 
-A browser-based personal music library with an original Highlife-inspired demo loop.
+AfroVibe is a browser-based Ghanaian music library with an original Highlife-inspired demo loop.
 
 **Live app:** https://rajeshwar01-01.github.io/gana-music-app/
 
