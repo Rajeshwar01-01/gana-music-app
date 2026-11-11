@@ -20,7 +20,7 @@ Run it locally:
 python server.py
 ```
 
-Open http://localhost:8000/. The database is created at `data/afrovibe.sqlite3`. Set `PORT` and `AFROVIBE_DB` to choose a different port or persistent database path.
+Open http://localhost:8000/. The database is created at `data/afrovibe.sqlite3`. Set `PORT`, `HOST`, and `AFROVIBE_DB` to choose the listen address, port, or persistent database path. For a public host, bind to `0.0.0.0` and put the app behind HTTPS.
 
 ### Online playlist sharing
 
