@@ -2,7 +2,7 @@
 
 A browser-based music app with a neon theme, an original Highlife-inspired demo loop, local audio, YouTube embeds, and editable playlists.
 
-**GitHub Pages frontend:** https://rajeshwar01-01.github.io/gana-music-app/
+**Public frontend:** https://rajeshwar01-01.github.io/gana-music-app/
 
 ## Frontend
 
@@ -20,12 +20,12 @@ Run it locally:
 python server.py
 ```
 
-Then open http://localhost:8000/. The database is created at `data/afrovibe.sqlite3`. Set `PORT` and `AFROVIBE_DB` to choose a different port or a persistent database path.
+Open http://localhost:8000/. The database is created at `data/afrovibe.sqlite3`. Set `PORT` and `AFROVIBE_DB` to choose a different port or persistent database path.
 
 ### Online playlist sharing
 
-When the page is served by `server.py`, **Share online** publishes the selected playlist and copies a share link. The API stores only YouTube links and names, never audio. Anyone with the share URL can view/import a copy. Only the creator's browser, which stores the private owner token, can update that shared playlist. Importing a link makes a separate copy that another user can edit and publish.
+When served by `server.py`, **Share online** publishes the selected playlist and copies a share link. The API stores YouTube links and titles, never audio. Anyone with the share URL can view or import a copy. Only the creator's browser, which keeps the private owner token, can update the original playlist. Importing a link makes a separate copy another user can edit and publish.
 
-The API is intentionally same-origin. Host the HTML and Python server together over HTTPS with a persistent disk to enable online sharing for everyone. GitHub Pages serves the static frontend only, so its current public page continues to support local playlists and JSON export/import; it cannot run this API. The Vercel account connection currently has no access to the selected team, so no hosted API was deployed.
+The backend and page should be hosted together over HTTPS with persistent disk to enable online sharing. GitHub Pages can serve the static frontend, but cannot run this API; its public page therefore supports local playlists and JSON import/export until a backend host is configured. Deploy `server.py` on a Python host that preserves the SQLite file between restarts, and point users to that host's URL.
 
-Local audio remains in the current browser and is never included in a shared link or JSON playlist.
+Local audio stays in the current browser and is never included in shared links or JSON playlists.
