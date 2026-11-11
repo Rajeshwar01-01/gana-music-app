@@ -22,6 +22,7 @@ from urllib.parse import parse_qs, urlsplit
 ROOT = Path(__file__).resolve().parent
 DB_PATH = Path(os.environ.get("AFROVIBE_DB", ROOT / "data" / "afrovibe.sqlite3"))
 PORT = int(os.environ.get("PORT", "8000"))
+HOST = os.environ.get("HOST", "0.0.0.0")
 MAX_BODY = 128_000
 MAX_TRACKS = 100
 VIDEO_ID = re.compile(r"^[A-Za-z0-9_-]{11}$")
@@ -206,6 +207,12 @@ class Handler(BaseHTTPRequestHandler):
             and hmac.compare_digest(row["owner_token_hash"], token_hash(supplied))
         )
 
+    def request_is_same_origin(self) -> bool:
+        origin = self.headers.get("Origin")
+        if not origin:
+            return True
+        return urlsplit(origin).netloc.lower() == self.headers.get("Host", "").lower()
+
     def do_GET(self) -> None:
         path = urlsplit(self.path).path
         if path == "/api/health":
@@ -240,6 +247,9 @@ class Handler(BaseHTTPRequestHandler):
         self.wfile.write(body)
 
     def do_POST(self) -> None:
+        if not self.request_is_same_origin():
+            self.send_json(403, {"error": "Cross-origin writes are not allowed."})
+            return
         if urlsplit(self.path).path != "/api/playlists":
             self.send_json(404, {"error": "Not found."})
             return
@@ -275,6 +285,9 @@ class Handler(BaseHTTPRequestHandler):
         )
 
     def do_PUT(self) -> None:
+        if not self.request_is_same_origin():
+            self.send_json(403, {"error": "Cross-origin writes are not allowed."})
+            return
         playlist_id = urlsplit(self.path).path.removeprefix("/api/playlists/")
         try:
             uuid.UUID(playlist_id)
@@ -307,6 +320,9 @@ class Handler(BaseHTTPRequestHandler):
         self.send_json(200, {"id": playlist_id, "name": name, "updatedAt": updated_at})
 
     def do_DELETE(self) -> None:
+        if not self.request_is_same_origin():
+            self.send_json(403, {"error": "Cross-origin writes are not allowed."})
+            return
         playlist_id = urlsplit(self.path).path.removeprefix("/api/playlists/")
         try:
             uuid.UUID(playlist_id)
@@ -326,7 +342,7 @@ class Handler(BaseHTTPRequestHandler):
 
 if __name__ == "__main__":
     initialize_db()
-    server = ThreadingHTTPServer(("0.0.0.0", PORT), Handler)
+    server = ThreadingHTTPServer((HOST, PORT), Handler)
     print(f"AfroVibe is available at http://localhost:{PORT}/")
     print(f"SQLite database: {DB_PATH}")
     try:
