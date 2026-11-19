@@ -6,7 +6,7 @@ A browser-based music app with a neon theme, an original Highlife-inspired demo 
 
 ## Frontend
 
-The app is a single HTML page. It supports local audio, likes, search and filters, official YouTube embeds, official Spotify track/album/playlist embeds, and local playlists. Two Spotify-curated Ghana playlists are featured for all visitors; Spotify links that a visitor adds are stored in that browser. Export a playlist as JSON to pass YouTube links to another user.
+The app is a single HTML page. It supports local audio, likes, search and filters, official YouTube embeds, official Spotify track/album/playlist embeds, and local playlists. Two Spotify-curated Ghana playlists and four tracks from the owner’s Spotify playlists are featured for all visitors. Visitors can add featured or pasted Spotify links to AfroVibe playlists, then export streaming links as JSON to share.
 
 YouTube and Spotify playback use their official players. The app does not download audio from either service. Some videos or playlists may be private, unavailable in your region, or disallow embedding. Import local audio only when you own it or have permission to use it; local audio remains on that device.
 
@@ -26,10 +26,10 @@ Open http://localhost:8000/. The database is created at `data/afrovibe.sqlite3`.
 
 ### Online playlist sharing
 
-When served by `server.py`, **Share online** publishes the selected playlist and copies a share link. The API stores YouTube links and titles, never audio. Anyone with the share URL can view or import a copy. Only the creator's browser, which keeps the private owner token, can update the original playlist. Importing a link makes a separate copy another user can edit and publish.
+When served by `server.py`, **Share online** publishes the selected playlist and copies a share link. The API stores YouTube and Spotify links and titles, never audio. Anyone with the share URL can view or import a copy. Only the creator's browser, which keeps the private owner token, can update the original playlist. Importing a link makes a separate copy another user can edit and publish.
 
 The backend and page should be hosted together over HTTPS with persistent disk to enable online sharing. GitHub Pages can serve the static frontend, but cannot run this API; its public page therefore supports local playlists and JSON import/export until a backend host is configured. Deploy `server.py` on a Python host that preserves the SQLite file between restarts, and point users to that host's URL.
 
-Local audio stays in the current browser and is never included in shared links or JSON playlists. Spotify links are also local to the browser; online playlist sharing currently supports YouTube links only.
+Local audio stays in the current browser and is never included in shared links or JSON playlists. Spotify links can be shared as links; the app never copies Spotify audio.
 
 

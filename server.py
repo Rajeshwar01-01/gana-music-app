@@ -27,6 +27,7 @@ MAX_BODY = 128_000
 MAX_TRACKS = 100
 VIDEO_ID = re.compile(r"^[A-Za-z0-9_-]{11}$")
 PLAYLIST_ID = re.compile(r"^[A-Za-z0-9_-]{5,120}$")
+SPOTIFY_ID = re.compile(r"^[A-Za-z0-9]{22}$")
 
 
 class ApiError(Exception):
@@ -103,6 +104,24 @@ def parse_youtube_url(value: object) -> str:
     return "https://www.youtube.com/playlist?list=" + list_id
 
 
+def parse_spotify_url(value: object) -> str:
+    if not isinstance(value, str) or len(value) > 2048:
+        raise ValueError("Each track must have a Spotify URL.")
+    parsed = urlsplit(value.strip())
+    if parsed.scheme != "https" or (parsed.hostname or "").lower() != "open.spotify.com":
+        raise ValueError("Only official Spotify track, album, or playlist links are accepted.")
+    parts = [part for part in parsed.path.split("/") if part]
+    if parts and parts[0] == "embed":
+        parts = parts[1:]
+    if len(parts) != 2 or parts[0] not in {"track", "album", "playlist"} or not SPOTIFY_ID.fullmatch(parts[1]):
+        raise ValueError("That Spotify link is invalid.")
+    return "https://open.spotify.com/" + parts[0] + "/" + parts[1]
+
+def parse_stream_url(value: object) -> str:
+    if isinstance(value, str) and "open.spotify.com" in value.lower():
+        return parse_spotify_url(value)
+    return parse_youtube_url(value)
+
 def normalize_playlist(payload: object) -> tuple[str, list[dict[str, str]]]:
     if not isinstance(payload, dict):
         raise ValueError("Send a JSON object.")
@@ -113,27 +132,27 @@ def normalize_playlist(payload: object) -> tuple[str, list[dict[str, str]]]:
 
     raw_tracks = payload.get("tracks")
     if not isinstance(raw_tracks, list) or len(raw_tracks) > MAX_TRACKS:
-        raise ValueError("A playlist can contain up to 100 YouTube links.")
+        raise ValueError("A playlist can contain up to 100 streaming links.")
     tracks: list[dict[str, str]] = []
     seen: set[str] = set()
     for item in raw_tracks:
         if isinstance(item, str):
-            url, title = item, "YouTube track"
+            url, title = item, "Streaming track"
         elif isinstance(item, dict):
             url = item.get("url")
             title = item.get("title", "YouTube track")
         else:
             raise ValueError("A track entry is invalid.")
-        normalized = parse_youtube_url(url)
+        normalized = parse_stream_url(url)
         if normalized in seen:
             continue
         if not isinstance(title, str):
-            title = "YouTube track"
-        title = " ".join(title.split())[:160] or "YouTube track"
+            title = "Streaming track"
+        title = " ".join(title.split())[:160] or "Streaming track"
         tracks.append({"url": normalized, "title": title})
         seen.add(normalized)
     if not tracks:
-        raise ValueError("Add at least one YouTube link.")
+        raise ValueError("Add at least one YouTube or Spotify link.")
     return name, tracks
 
 
@@ -351,3 +370,5 @@ if __name__ == "__main__":
         print("\nStopping AfroVibe.")
     finally:
         server.server_close()
+
+
