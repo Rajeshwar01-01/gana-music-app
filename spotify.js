@@ -5,11 +5,16 @@
   const input = document.getElementById("spotifyUrl");
   const entriesNode = document.getElementById("spotifyEntries");
   const status = document.getElementById("spotifyStatus");
-  if (!form || !input || !entriesNode || !status) return;
+  const featuredNode = document.getElementById("spotifyFeatured");
+  if (!form || !input || !entriesNode || !status || !featuredNode) return;
 
   const storageKey = "afrovibe-spotify-links";
   const supportedTypes = new Set(["track", "album", "playlist"]);
   const spotifyId = /^[A-Za-z0-9]{22}$/;
+  const featuredLinks = [
+    { title: " Ghana Highlife Party", creator: "Spotify", url: "https://open.spotify.com/playlist/37i9dQZF1DXc5TIUNEibWO?utm_source=openai&utm_medium=chatgpt&go=1&nap_web=1&request_id=a50e9505-b4aa-4bb1-b4e6-6b6e3b141064" },
+    { title: "Ghana Party", creator: "spotify", url: "https://open.spotify.com/playlist/37i9dQZF1DX7t977T5F4kQ?utm_source=openai&utm_medium=chatgpt&go=1&nap_web=1&request_id=a50e9505-b4aa-4bb1-b4e6-6b6e3b141064" }
+  ];
 
   function parseSpotifyLink(value) {
     try {
@@ -49,6 +54,38 @@
       status.textContent = "Browser storage is full. Remove a Spotify link and try again.";
       return false;
     }
+  }
+
+  function renderFeatured() {
+    featuredNode.replaceChildren();
+    featuredLinks.forEach(item => {
+      const entry = parseSpotifyLink(item.url);
+      if (!entry) return;
+      const card = document.createElement("article");
+      card.className = "spotify-entry";
+      const title = document.createElement("h5");
+      title.className = "spotify-entry-title";
+      title.textContent = item.title;
+      const source = document.createElement("span");
+      source.className = "spotify-entry-source";
+      source.textContent = "Curated by " + item.creator;
+      const frame = document.createElement("iframe");
+      frame.src = "https://open.spotify.com/embed/" + entry.type + "/" + entry.id + "?utm_source=generator";
+      frame.title = "Spotify playlist: " + item.title;
+      frame.height = "352";
+      frame.loading = "lazy";
+      frame.setAttribute("allow", "autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture");
+      frame.setAttribute("allowfullscreen", "");
+      frame.setAttribute("frameborder", "0");
+      const link = document.createElement("a");
+      link.className = "spotify-open";
+      link.href = item.url;
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
+      link.textContent = "Open on Spotify";
+      card.append(title, source, frame, link);
+      featuredNode.append(card);
+    });
   }
 
   function renderEntries() {
@@ -106,6 +143,7 @@
     }
   });
 
+  renderFeatured();
   renderEntries();
 })();
 
