@@ -6,9 +6,11 @@ A browser-based music app with a neon theme, an original Highlife-inspired demo 
 
 ## Frontend
 
-The app is a single HTML page. It supports local audio, likes, search and filters, YouTube video and playlist embeds, and local playlists. Export a playlist as JSON to pass YouTube links to another user.
+The app is a single HTML page. It supports local audio, likes, search and filters, official YouTube embeds, official Spotify track/album/playlist embeds, and local playlists. Two Spotify-curated Ghana playlists are featured for all visitors; Spotify links that a visitor adds are stored in that browser. Export a playlist as JSON to pass YouTube links to another user.
 
-YouTube playback uses the official embedded player. The app does not download YouTube audio. Some videos may be private, unavailable in your region, or disallow embedding. Import music and links you have permission to use.
+YouTube and Spotify playback use their official players. The app does not download audio from either service. Some videos or playlists may be private, unavailable in your region, or disallow embedding. Import local audio only when you own it or have permission to use it; local audio remains on that device.
+
+The app does not include a shared music catalog or upload audio to its backend. A public catalog requires audio files and documented rights that allow redistribution.
 
 ## Backend: SQLite playlist API
 
@@ -28,4 +30,6 @@ When served by `server.py`, **Share online** publishes the selected playlist and
 
 The backend and page should be hosted together over HTTPS with persistent disk to enable online sharing. GitHub Pages can serve the static frontend, but cannot run this API; its public page therefore supports local playlists and JSON import/export until a backend host is configured. Deploy `server.py` on a Python host that preserves the SQLite file between restarts, and point users to that host's URL.
 
-Local audio stays in the current browser and is never included in shared links or JSON playlists.
+Local audio stays in the current browser and is never included in shared links or JSON playlists. Spotify links are also local to the browser; online playlist sharing currently supports YouTube links only.
+
+
