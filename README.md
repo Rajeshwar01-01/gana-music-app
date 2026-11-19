@@ -6,7 +6,7 @@ A browser-based music app with a neon theme, an original Highlife-inspired demo 
 
 ## Frontend
 
-The app is a single HTML page. It supports local audio, likes, search and filters, official YouTube embeds, official Spotify track/album/playlist embeds, and local playlists. Spotify links are stored in the current browser. Export a playlist as JSON to pass YouTube links to another user.
+The app is a single HTML page. It supports local audio, likes, search and filters, official YouTube embeds, official Spotify track/album/playlist embeds, and local playlists. Two Spotify-curated Ghana playlists are featured for all visitors; Spotify links that a visitor adds are stored in that browser. Export a playlist as JSON to pass YouTube links to another user.
 
 YouTube and Spotify playback use their official players. The app does not download audio from either service. Some videos or playlists may be private, unavailable in your region, or disallow embedding. Import local audio only when you own it or have permission to use it; local audio remains on that device.
 
